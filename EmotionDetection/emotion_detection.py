@@ -1,3 +1,5 @@
+""" This module provides functionality to detect emotions in a given text using an external API.
+"""
 import json
 from typing import Dict
 
@@ -15,11 +17,14 @@ BLANK_EMOTION_RESPONSE = {
 
 
 def dominant_emotion(emotions: Dict[str, float]) -> str:
+    """Determine the dominant emotion from a dictionary of emotions."""
     return max(emotions, key=emotions.get)
 
 
 def emotion_detector(text_to_analyze: str) -> Dict[str, float | str]:
-    url = "https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict"
+    """Detect emotions in the provided text using an external API."""
+    url = "https://sn-watson-emotion.labs.skills.network\
+        /v1/watson.runtime.nlp.v1/NlpService/EmotionPredict"
     headers = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
     data = {"raw_document": {"text": text_to_analyze}}
     response = requests.post(url, headers=headers, json=data, timeout=10)
